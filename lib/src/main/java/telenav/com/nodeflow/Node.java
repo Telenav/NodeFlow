@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by Dmitri on 17/06/2015.
  */
-class Node<T> {
+public class Node<T> {
     private T data;
     private int depth;
     private int index;
