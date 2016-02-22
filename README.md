@@ -10,6 +10,7 @@ Follow these steps to add NodeFLow to your app:
 <li>(Optional) Set node change listener & animation duration</li>
 </ol>
 #Basic implementation
+MyFlow.java
 ```java
 public class MyFlow extends NodeFlow {
 
@@ -41,4 +42,17 @@ public class MyFlow extends NodeFlow {
         return v;
     }
 }
+```
+<br>
+activity_main.xml
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.yourpackage.MyFlow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</RelativeLayout>
 ```
