@@ -1,3 +1,15 @@
+/**
+ * © 2016 Telenav, Inc.  All Rights Reserved
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License").
+ * <p/>
+ * You may not use this file except in compliance with the License. You may obtain a copy of the
+ * License at http://www.apache.org/licenses/LICENSE-2.0. Unless required by applicable law or
+ * agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for
+ * the specific language governing permissions and limitations under the License.
+ */
+
 package telenav.com.nodeflow;
 
 import android.animation.Animator;
@@ -12,11 +24,11 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.RelativeLayout;
 
 /**
- * Created by dima on 16/02/16.
+ * Abstract class that handles all the node animations.
  */
 public abstract class NodeFlow extends RelativeLayout {
 
-    float height;
+    private float height;
     private Node<?> root;
     private Node activeNode;
     private int duration = 500;
@@ -37,37 +49,68 @@ public abstract class NodeFlow extends RelativeLayout {
         initialize();
     }
 
-    public void initialize() {
+    /**
+     * Initializes the node flow with the root data and displays it.
+     */
+    protected void initialize() {
         root = getRootNode();
         showViewsForNode(root);
     }
 
+    /**
+     * Sets the node change listener.
+     * @param listener provided listener
+     */
     public void setNodeChangeListener(OnActiveNodeChangeListener listener) {
         nodeChangeListener = listener;
     }
 
+    /**
+     * Sets the duration in milliseconds for all the node animations.
+     * @param millis duration in milliseconds
+     */
     public void setAnimationDuration(int millis) {
         duration = millis;
     }
 
+    /**
+     * Closes the active node. If current node is root node - nothing happens.
+     */
     public void closeActiveNode() {
         if (activeNode.getParent() != null)
             showViewsForNode(activeNode, true, true);
     }
 
+    /**
+     * Opens a child node at the specified index in the child list of the current node.
+     * @param index index of child
+     */
     public void openChildNode(int index) {
         if (activeNode.hasChildren() && index > 0 && index < activeNode.getChildCount())
             showViewsForNode(activeNode.getChildAt(index), true, false);
     }
 
+    /**
+     * Returns the current opened node
+     */
     public Node<?> getActiveNode() {
         return activeNode;
     }
 
+    /**
+     * Convenience method for {@link #showViewsForNode(Node, boolean, boolean)}
+     * @param node desired node
+     */
     private void showViewsForNode(Node<?> node) {
         showViewsForNode(node, false, false);
     }
 
+    /**
+     * Displays all the nodes associated with the specified node (node + child nodes)
+     * @param node desired node
+     * @param animate true if should animate node transition
+     * @param isBack true if should show closing animation
+     */
     private void showViewsForNode(Node<?> node, boolean animate, boolean isBack) {
         if (node != null) {
             activeNode = node;
@@ -86,6 +129,10 @@ public abstract class NodeFlow extends RelativeLayout {
         }
     }
 
+    /**
+     * perform opening animation for the specified node
+     * @param node node to be animated
+     */
     private void animateDrillIn(final Node<?> node) {
         final int index = activeNode.getIndex() + (activeNode.getDepth() > 1 ? 1 : 0);
         ValueAnimator animator = ValueAnimator.ofFloat(1);
@@ -119,20 +166,24 @@ public abstract class NodeFlow extends RelativeLayout {
         animateDrillAlpha(index + 1, getChildCount(), 0);
     }
 
+    /**
+     * perform closing animation for the specified node
+     * @param node node to be animated
+     */
     private void animateDrillOut(final Node<?> node) {
         final Node<?> parent = node.getParent();
         if (parent.getDepth() > 0)
             addView(_getHeaderView(node.getParent()), 0);//add parent
         if (nodeChangeListener != null && node.getParent().getDepth() > 0)
             nodeChangeListener.onParentNodeOpening(getChildAt(0), node.getParent());
-        for (int i = 0; i < node.getParent().getChildren().size(); ++i) {
+        for (int i = 0; i < node.getParent().getChildCount(); ++i) {
             if (i != node.getIndex())
                 addView(_getHeaderView(node.getParent().getChildAt(i)), i + (parent.getDepth() > 0 ? 1 : 0));
         }
 
 
         final int newIndex = node.getIndex() + (parent.getDepth() > 0 ? 1 : 0);
-        final int aux = parent.getChildren().size() + (parent.getDepth() > 0 ? 1 : 0);
+        final int aux = parent.getChildCount() + (parent.getDepth() > 0 ? 1 : 0);
         ValueAnimator animator = ValueAnimator.ofFloat(1);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -163,6 +214,12 @@ public abstract class NodeFlow extends RelativeLayout {
         animateDrillAlpha(newIndex + 1, aux, 1);
     }
 
+    /**
+     * perform alpha animation associated with closing or opening a node
+     * @param startIndex start index of child views to be animated
+     * @param endIndex end index of child views to be animated
+     * @param destAlpha final alpha of child views to be animated
+     */
     private void animateDrillAlpha(final int startIndex, final int endIndex, final int destAlpha) {
         ValueAnimator animator = ValueAnimator.ofFloat(1 - destAlpha, destAlpha);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -189,6 +246,10 @@ public abstract class NodeFlow extends RelativeLayout {
         animator.start();
     }
 
+    /**
+     * perform a fade in animation for showing node content
+     * @param node active node
+     */
     private void fadeIn(final Node<?> node) {
         ValueAnimator animator = ValueAnimator.ofFloat(1);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -204,6 +265,10 @@ public abstract class NodeFlow extends RelativeLayout {
         animator.start();
     }
 
+    /**
+     * perform a fade out animation for hiding node content
+     * @param node active node
+     */
     private void fadeOut(final Node<?> node) {
         ValueAnimator animator = ValueAnimator.ofFloat(1, 0);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -225,6 +290,11 @@ public abstract class NodeFlow extends RelativeLayout {
         animator.start();
     }
 
+    /**
+     * add or remove views according to the given node
+     * @param node node for which the update will be performed
+     * @param fadeIn if true - runs a fade in animation
+     */
     private void updateViews(Node<?> node, boolean fadeIn) {
         Node<?> aNode = !fadeIn && !node.equals(root) ? node.getParent() : node;
         int depthAdjustment = (node.getDepth() > 1 ? 1 : 0);
@@ -254,13 +324,17 @@ public abstract class NodeFlow extends RelativeLayout {
             fadeIn(aNode);
     }
 
+    /**
+     * adds child views for the current node
+     * @param node parent node
+     * @param show if true - children are visible
+     */
     private void addChildren(Node<?> node, boolean show) {
-        //int omitIndex = !show ? -1 : (node.equals(root) ? -1 : 0);
         int omitIndex = (!show || node.equals(root)) ? -1 : 0;
         int i = getChildCount();
-        for (int j = 0; j < node.getChildren().size(); ++j) {
+        for (int j = 0; j < node.getChildCount(); ++j) {
             if (omitIndex != j) {
-                View v = _getHeaderView(node.getChildren().get(j));
+                View v = _getHeaderView(node.getChildAt(j));
                 v.setTranslationY(i++ * height);
                 v.setAlpha(show ? 1 : 0);
                 addView(v);
@@ -268,6 +342,11 @@ public abstract class NodeFlow extends RelativeLayout {
         }
     }
 
+    /**
+     * returns the header view for a given node with it's layout params adjusted and a click listener attached
+     * @param node given node
+     * @return header view
+     */
     private View _getHeaderView(final Node<?> node) {
         View view = getHeaderView(node);
         if (view.getLayoutParams() != null && view.getLayoutParams().height >= 0)
@@ -290,6 +369,11 @@ public abstract class NodeFlow extends RelativeLayout {
         return view;
     }
 
+    /**
+     * returns the content view for a given node with it's layout params adjusted
+     * @param node given node
+     * @return content view
+     */
     private View _getContentView(Node<?> node) {
         View v = getContentView(node);
         int margin = ((MarginLayoutParams) getChildAt(0).getLayoutParams()).bottomMargin; //hide header margin
@@ -303,13 +387,24 @@ public abstract class NodeFlow extends RelativeLayout {
         return v;
     }
 
+    /**
+     * Returns the root node with all the data
+     */
     protected abstract Node<?> getRootNode();
 
+    /**
+     * Returns the header view for a given node
+     * @param node node for which a view is required
+     */
     protected abstract View getHeaderView(Node<?> node);
 
+    /**
+     * Returns the content view for a given node
+     * @param node node for which a view is required
+     */
     protected abstract View getContentView(Node<?> node);
 
-    public static class CustomAnimationListener implements Animator.AnimatorListener {
+    private static class CustomAnimationListener implements Animator.AnimatorListener {
         @Override
         public void onAnimationStart(Animator animator) {
 
