@@ -41,6 +41,14 @@ public class Node<T> {
     }
 
     /**
+     * Returns a new node object with the associated data.
+     * @param data associated data
+     */
+    public static <E> Node<E> get(E data) {
+        return new Node<>(data);
+    }
+
+    /**
      * Retrieve data associated with current node.
      */
     public T getData() {

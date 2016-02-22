@@ -10,5 +10,5 @@
     <telenav.com.demoapp.LocationFlow
         android:id="@+id/nodeFlow"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></telenav.com.demoapp.LocationFlow>
+        android:layout_height="match_parent"/>
 </RelativeLayout>
