@@ -1,6 +1,8 @@
 # NodeFlow
 Flexible view used to visualize hierarchical content
 
+![alt tag](https://raw.githubusercontent.com/Telenav/NodeFlow/master/gif/demo.gif?token=AMYIVqqzN85dOdOY4DOfk2wC-i8R7RxNks5W1HArwA%3D%3D "Demo")
+
 #Using NodeFlow in your app
 Follow these steps to add NodeFLow to your app:
 <ol>
