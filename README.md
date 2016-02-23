@@ -65,6 +65,6 @@ Add extended view to a layout
 Set node change listener & animation duration
 ```java 
  MyFlow nodeFlow = ((MyFlow) findViewById(R.id.nodeFlow));
- nodeFlow.setNodeChangeListener(new OnActiveNodeChangeListener() {...);
+ nodeFlow.setNodeChangeListener(new OnActiveNodeChangeListener() {...});
  nodeFlow.setAnimationDuration(500);
 ```
