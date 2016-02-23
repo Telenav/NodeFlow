@@ -1,5 +1,5 @@
 # NodeFlow
-NodeFlow is a library that makes visualizing hierarchical content easier. Perfect for displaying items that are organized in categories / subcategories.
+NodeFlow is an Android library that provides a simple way to visualize hierarchical content. Perfect for displaying items that are organized in categories / subcategories.
 
 ![alt tag](/gif/demo.gif??raw=true "Demo")
 
@@ -9,6 +9,11 @@ Android 4.0+ (Ice Cream Sandwich and later)
 #Using NodeFlow
 
 ###Step 1
+Add the following line to the ```dependencies``` section of your ```build.gradle``` file
+```
+compile 'com.telenav.nodeflow:nodeflow:0.1'
+```
+###Step 2
 Extend NodeFlowLayout class and implement abstract methods
 ```java
 public class MyFlow extends NodeFlowLayout {
@@ -42,7 +47,7 @@ public class MyFlow extends NodeFlowLayout {
     }
 }
 ```
-###Step 2
+###Step 3
 Add extended view to a layout
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -56,7 +61,7 @@ Add extended view to a layout
         android:layout_height="match_parent"/>
 </RelativeLayout>
 ```
-###Step 3 (Optional)
+###Step 4 (Optional)
 Set node change listener & animation duration
 ```java 
  MyFlow nodeFlow = ((MyFlow) findViewById(R.id.nodeFlow));
