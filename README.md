@@ -6,7 +6,7 @@ NodeFlow is a library that makes visualizing hierarchical content easier. Perfec
 #Requirements
 Android 4.0+ (Ice Cream Sandwich and later)
 
-#Using NodeFlow in your app
+#Using NodeFlow
 Follow these steps to add NodeFlow to your app:
 <ol>
 <li>Extend NodeFlowLayout class</li>
@@ -21,7 +21,7 @@ public class MyFlow extends NodeFlowLayout {
 
 ...
 
-    //define root node
+    //define root node and populate it with data
     Node<String> root = Node.get("root").addChildren(Arrays.asList("child1", "child2", "child3"));
 
     @Override
