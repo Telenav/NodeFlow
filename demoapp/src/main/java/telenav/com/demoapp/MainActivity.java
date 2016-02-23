@@ -9,7 +9,7 @@ import com.facebook.imagepipeline.core.ImagePipelineConfig;
 
 public class MainActivity extends AppCompatActivity {
 
-    LocationFlow nodeFlow;
+    LocationFlowLayout nodeFlow;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         Fresco.initialize(this, config);
         setContentView(R.layout.activity_main);
-        nodeFlow = ((LocationFlow) findViewById(R.id.nodeFlow));
+        nodeFlow = ((LocationFlowLayout) findViewById(R.id.nodeFlow));
     }
 
     @Override

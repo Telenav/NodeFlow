@@ -26,7 +26,7 @@ import android.widget.RelativeLayout;
 /**
  * Abstract class that handles all the node animations.
  */
-public abstract class NodeFlow extends RelativeLayout {
+public abstract class NodeFlowLayout extends RelativeLayout {
 
     private float height;
     private Node<?> root;
@@ -34,17 +34,17 @@ public abstract class NodeFlow extends RelativeLayout {
     private int duration = 500;
     private OnActiveNodeChangeListener nodeChangeListener;
 
-    public NodeFlow(Context context) {
+    public NodeFlowLayout(Context context) {
         super(context);
         initialize();
     }
 
-    public NodeFlow(Context context, AttributeSet attrs) {
+    public NodeFlowLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         initialize();
     }
 
-    public NodeFlow(Context context, AttributeSet attrs, int defStyleAttr) {
+    public NodeFlowLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initialize();
     }

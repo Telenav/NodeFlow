@@ -17,22 +17,22 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import java.util.Arrays;
 
 import telenav.com.nodeflow.Node;
-import telenav.com.nodeflow.NodeFlow;
+import telenav.com.nodeflow.NodeFlowLayout;
 import telenav.com.nodeflow.OnActiveNodeChangeListener;
 
 /**
  * Created by dima on 17/02/16.
  */
-public class LocationFlow extends NodeFlow {
-    public LocationFlow(Context context) {
+public class LocationFlowLayout extends NodeFlowLayout {
+    public LocationFlowLayout(Context context) {
         super(context);
     }
 
-    public LocationFlow(Context context, AttributeSet attrs) {
+    public LocationFlowLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public LocationFlow(Context context, AttributeSet attrs, int defStyleAttr) {
+    public LocationFlowLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 

@@ -7,7 +7,7 @@
     tools:context="telenav.com.demoapp.MainActivity"
     android:background="#F1F0FF">
 
-    <telenav.com.demoapp.LocationFlow
+    <telenav.com.demoapp.LocationFlowLayout
         android:id="@+id/nodeFlow"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
