@@ -1,5 +1,5 @@
 # NodeFlow
-Layout used to visualize hierarchical content
+NodeFlow is a library that makes visualizing hierarchical content easier. Perfect for displaying items that are organized in categories / subcategories.
 
 ![alt tag](https://raw.githubusercontent.com/Telenav/NodeFlow/master/gif/demo.gif?token=AMYIVqqzN85dOdOY4DOfk2wC-i8R7RxNks5W1HArwA%3D%3D "Demo")
 
@@ -9,7 +9,7 @@ Android 4.0+ (Ice Cream Sandwich and later)
 #Using NodeFlow in your app
 Follow these steps to add NodeFlow to your app:
 <ol>
-<li>Extend NodeFlow class</li>
+<li>Extend NodeFlowLayout class</li>
 <li>Implement abstract methods</li>
 <li>Add extended view to a layout</li>
 <li>(Optional) Set node change listener & animation duration</li>
@@ -17,7 +17,7 @@ Follow these steps to add NodeFlow to your app:
 #Basic implementation
 MyFlow.java
 ```java
-public class MyFlow extends NodeFlow {
+public class MyFlow extends NodeFlowLayout {
 
 ...
 
