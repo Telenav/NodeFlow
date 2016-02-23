@@ -9,7 +9,7 @@ Android 4.0+ (Ice Cream Sandwich and later)
 #Using NodeFlow in your app
 Follow these steps to add NodeFlow to your app:
 <ol>
-<li>Extend NodeFlow class</li>
+<li>Extend NodeFlowLayout class</li>
 <li>Implement abstract methods</li>
 <li>Add extended view to a layout</li>
 <li>(Optional) Set node change listener & animation duration</li>
@@ -17,7 +17,7 @@ Follow these steps to add NodeFlow to your app:
 #Basic implementation
 MyFlow.java
 ```java
-public class MyFlow extends NodeFlow {
+public class MyFlow extends NodeFlowLayout {
 
 ...
 
