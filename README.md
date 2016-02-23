@@ -1,8 +1,13 @@
 # NodeFlow
-Flexible view used to visualize hierarchical content
+Layout used to visualize hierarchical content
+
+![alt tag](https://raw.githubusercontent.com/Telenav/NodeFlow/master/gif/demo.gif?token=AMYIVqqzN85dOdOY4DOfk2wC-i8R7RxNks5W1HArwA%3D%3D "Demo")
+
+#Requirements
+Android 4.0+ (Ice Cream Sandwich and later)
 
 #Using NodeFlow in your app
-Follow these steps to add NodeFLow to your app:
+Follow these steps to add NodeFlow to your app:
 <ol>
 <li>Extend NodeFlow class</li>
 <li>Implement abstract methods</li>
