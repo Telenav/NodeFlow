@@ -20,9 +20,6 @@ import telenav.com.nodeflow.Node;
 import telenav.com.nodeflow.NodeFlowLayout;
 import telenav.com.nodeflow.OnActiveNodeChangeListener;
 
-/**
- * Created by dima on 17/02/16.
- */
 public class LocationFlowLayout extends NodeFlowLayout {
     public LocationFlowLayout(Context context) {
         super(context);

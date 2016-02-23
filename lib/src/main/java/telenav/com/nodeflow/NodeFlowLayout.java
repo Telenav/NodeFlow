@@ -59,6 +59,7 @@ public abstract class NodeFlowLayout extends RelativeLayout {
 
     /**
      * Sets the node change listener.
+     *
      * @param listener provided listener
      */
     public void setNodeChangeListener(OnActiveNodeChangeListener listener) {
@@ -67,6 +68,7 @@ public abstract class NodeFlowLayout extends RelativeLayout {
 
     /**
      * Sets the duration in milliseconds for all the node animations.
+     *
      * @param millis duration in milliseconds
      */
     public void setAnimationDuration(int millis) {
@@ -83,6 +85,7 @@ public abstract class NodeFlowLayout extends RelativeLayout {
 
     /**
      * Opens a child node at the specified index in the child list of the current node.
+     *
      * @param index index of child
      */
     public void openChildNode(int index) {
@@ -99,6 +102,7 @@ public abstract class NodeFlowLayout extends RelativeLayout {
 
     /**
      * Convenience method for {@link #showViewsForNode(Node, boolean, boolean)}
+     *
      * @param node desired node
      */
     private void showViewsForNode(Node<?> node) {
@@ -107,9 +111,10 @@ public abstract class NodeFlowLayout extends RelativeLayout {
 
     /**
      * Displays all the nodes associated with the specified node (node + child nodes)
-     * @param node desired node
+     *
+     * @param node    desired node
      * @param animate true if should animate node transition
-     * @param isBack true if should show closing animation
+     * @param isBack  true if should show closing animation
      */
     private void showViewsForNode(Node<?> node, boolean animate, boolean isBack) {
         if (node != null) {
@@ -131,6 +136,7 @@ public abstract class NodeFlowLayout extends RelativeLayout {
 
     /**
      * perform opening animation for the specified node
+     *
      * @param node node to be animated
      */
     private void animateDrillIn(final Node<?> node) {
@@ -168,6 +174,7 @@ public abstract class NodeFlowLayout extends RelativeLayout {
 
     /**
      * perform closing animation for the specified node
+     *
      * @param node node to be animated
      */
     private void animateDrillOut(final Node<?> node) {
@@ -188,16 +195,16 @@ public abstract class NodeFlowLayout extends RelativeLayout {
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                for (int i = 0; i < newIndex; ++i) {
-                    getChildAt(i).setTranslationY(height * (-newIndex + i) + height * newIndex * ((Float) animation.getAnimatedValue()));
-                }
-                getChildAt(newIndex).setTranslationY(height * newIndex * ((Float) animation.getAnimatedValue()));
-
-
-                for (int i = newIndex + 1; i < aux; ++i) {
-                    getChildAt(i).setTranslationY(
-                            (getHeight() + height * (i - (newIndex + 1))) -
-                                    ((getHeight() - (node.getIndex() + 1 + (parent.getDepth() > 0 ? 1 : 0)) * height) * ((Float) animation.getAnimatedValue())));
+                for (int i = 0; i < aux; ++i) {
+                    if (i < newIndex) {
+                        getChildAt(i).setTranslationY(height * (-newIndex + i) + height * newIndex * ((Float) animation.getAnimatedValue()));
+                    } else if (i > newIndex) {
+                        getChildAt(i).setTranslationY(
+                                (getHeight() + height * (i - (newIndex + 1))) -
+                                        ((getHeight() - (node.getIndex() + 1 + (parent.getDepth() > 0 ? 1 : 0)) * height) * ((Float) animation.getAnimatedValue())));
+                    } else {
+                        getChildAt(newIndex).setTranslationY(height * newIndex * ((Float) animation.getAnimatedValue()));
+                    }
                 }
             }
         });
@@ -216,9 +223,10 @@ public abstract class NodeFlowLayout extends RelativeLayout {
 
     /**
      * perform alpha animation associated with closing or opening a node
+     *
      * @param startIndex start index of child views to be animated
-     * @param endIndex end index of child views to be animated
-     * @param destAlpha final alpha of child views to be animated
+     * @param endIndex   end index of child views to be animated
+     * @param destAlpha  final alpha of child views to be animated
      */
     private void animateDrillAlpha(final int startIndex, final int endIndex, final int destAlpha) {
         ValueAnimator animator = ValueAnimator.ofFloat(1 - destAlpha, destAlpha);
@@ -248,6 +256,7 @@ public abstract class NodeFlowLayout extends RelativeLayout {
 
     /**
      * perform a fade in animation for showing node content
+     *
      * @param node active node
      */
     private void fadeIn(final Node<?> node) {
@@ -267,6 +276,7 @@ public abstract class NodeFlowLayout extends RelativeLayout {
 
     /**
      * perform a fade out animation for hiding node content
+     *
      * @param node active node
      */
     private void fadeOut(final Node<?> node) {
@@ -292,7 +302,8 @@ public abstract class NodeFlowLayout extends RelativeLayout {
 
     /**
      * add or remove views according to the given node
-     * @param node node for which the update will be performed
+     *
+     * @param node   node for which the update will be performed
      * @param fadeIn if true - runs a fade in animation
      */
     private void updateViews(Node<?> node, boolean fadeIn) {
@@ -326,6 +337,7 @@ public abstract class NodeFlowLayout extends RelativeLayout {
 
     /**
      * adds child views for the current node
+     *
      * @param node parent node
      * @param show if true - children are visible
      */
@@ -344,6 +356,7 @@ public abstract class NodeFlowLayout extends RelativeLayout {
 
     /**
      * returns the header view for a given node with it's layout params adjusted and a click listener attached
+     *
      * @param node given node
      * @return header view
      */
@@ -371,6 +384,7 @@ public abstract class NodeFlowLayout extends RelativeLayout {
 
     /**
      * returns the content view for a given node with it's layout params adjusted
+     *
      * @param node given node
      * @return content view
      */
@@ -394,12 +408,14 @@ public abstract class NodeFlowLayout extends RelativeLayout {
 
     /**
      * Returns the header view for a given node
+     *
      * @param node node for which a view is required
      */
     protected abstract View getHeaderView(Node<?> node);
 
     /**
      * Returns the content view for a given node
+     *
      * @param node node for which a view is required
      */
     protected abstract View getContentView(Node<?> node);

@@ -1,8 +1,5 @@
 package telenav.com.demoapp;
 
-/**
- * Created by dima on 17/02/16.
- */
 public class Location {
     private String name;
     private String url;
