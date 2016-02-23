@@ -7,15 +7,9 @@ NodeFlow is a library that makes visualizing hierarchical content easier. Perfec
 Android 4.0+ (Ice Cream Sandwich and later)
 
 #Using NodeFlow
-Follow these steps to add NodeFlow to your app:
-<ol>
-<li>Extend NodeFlowLayout class</li>
-<li>Implement abstract methods</li>
-<li>Add extended view to a layout</li>
-<li>(Optional) Set node change listener & animation duration</li>
-</ol>
-#Basic implementation
-MyFlow.java
+
+###Step 1
+Extend NodeFlowLayout class and implement abstract methods
 ```java
 public class MyFlow extends NodeFlowLayout {
 
@@ -48,8 +42,8 @@ public class MyFlow extends NodeFlowLayout {
     }
 }
 ```
-<br>
-activity_main.xml
+###Step 2
+Add extended view to a layout
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -57,7 +51,15 @@ activity_main.xml
     android:layout_height="match_parent">
 
     <com.yourpackage.MyFlow
+        android:id="@+id/nodeFlow"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 </RelativeLayout>
+```
+###Step 3 (Optional)
+Set node change listener & animation duration
+```java 
+ MyFlow nodeFlow = ((MyFlow) findViewById(R.id.nodeFlow));
+ nodeFlow.setNodeChangeListener(new OnActiveNodeChangeListener() {...);
+ nodeFlow.setAnimationDuration(500);
 ```
