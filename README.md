@@ -39,7 +39,7 @@ public class MyFlow extends NodeFlowLayout {
     }
 
     @Override
-    protected View getHeaderView(final Node<?> node) {
+    protected View getHeaderView(Node<?> node) {
         //inflate view
         ViewGroup v = (ViewGroup) LayoutInflater.from(getContext()).inflate(R.layout.header, this, false);
         //populate with content
