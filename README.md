@@ -1,7 +1,7 @@
 # NodeFlow
 NodeFlow is a library that makes visualizing hierarchical content easier. Perfect for displaying items that are organized in categories / subcategories.
 
-![alt tag](https://raw.githubusercontent.com/Telenav/NodeFlow/master/gif/demo.gif?token=AMYIVqqzN85dOdOY4DOfk2wC-i8R7RxNks5W1HArwA%3D%3D "Demo")
+![alt tag](/gif/demo.gif??raw=true "Demo")
 
 #Requirements
 Android 4.0+ (Ice Cream Sandwich and later)
