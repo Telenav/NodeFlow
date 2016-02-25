@@ -1,3 +1,4 @@
+ [ ![Download](https://api.bintray.com/packages/dimatim/maven/NodeFlow/images/download.svg) ](https://bintray.com/dimatim/maven/NodeFlow/_latestVersion)
 # NodeFlow
 NodeFlow is an Android library that provides a simple way to visualize hierarchical content. Perfect for displaying items that are organized in categories / subcategories.
 
