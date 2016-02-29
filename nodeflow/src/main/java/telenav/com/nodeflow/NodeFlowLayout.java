@@ -15,10 +15,13 @@ package telenav.com.nodeflow;
 import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.os.Build;
+import android.os.Parcelable;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.RelativeLayout;
@@ -28,9 +31,8 @@ import android.widget.RelativeLayout;
  */
 public abstract class NodeFlowLayout extends RelativeLayout {
 
-    private float height;
-    private Node<?> root;
-    private Node activeNode;
+    private static Node<?> activeNode;
+    private float headerHeight;
     private int duration = 500;
     private OnActiveNodeChangeListener nodeChangeListener;
 
@@ -53,8 +55,9 @@ public abstract class NodeFlowLayout extends RelativeLayout {
      * Initializes the node flow with the root data and displays it.
      */
     protected void initialize() {
-        root = getRootNode();
-        showViewsForNode(root);
+        Node<?> root = getRootNode();
+        if (activeNode == null && root != null)
+            showViewsForNode(root);
     }
 
     /**
@@ -148,14 +151,14 @@ public abstract class NodeFlowLayout extends RelativeLayout {
 
                 for (int i = 0; i < getChildCount(); ++i) {
                     if (i < index) {
-                        getChildAt(i).setTranslationY(height * i - ((Float) animation.getAnimatedValue())
-                                * height * index);
+                        getChildAt(i).setTranslationY(headerHeight * i - ((Float) animation.getAnimatedValue())
+                                * headerHeight * index);
                     } else if (i > index) {
-                        getChildAt(i).setTranslationY(height * i + ((Float) animation.getAnimatedValue())
-                                * (getHeight() - height * index));
+                        getChildAt(i).setTranslationY(headerHeight * i + ((Float) animation.getAnimatedValue())
+                                * (getHeight() - headerHeight * index));
                     } else {
-                        getChildAt(i).setTranslationY(height * i - ((Float) animation.getAnimatedValue())
-                                * height * index); // move active item
+                        getChildAt(i).setTranslationY(headerHeight * i - ((Float) animation.getAnimatedValue())
+                                * headerHeight * index); // move active item
                     }
                 }
             }
@@ -197,13 +200,13 @@ public abstract class NodeFlowLayout extends RelativeLayout {
             public void onAnimationUpdate(ValueAnimator animation) {
                 for (int i = 0; i < aux; ++i) {
                     if (i < newIndex) {
-                        getChildAt(i).setTranslationY(height * (-newIndex + i) + height * newIndex * ((Float) animation.getAnimatedValue()));
+                        getChildAt(i).setTranslationY(headerHeight * (-newIndex + i) + headerHeight * newIndex * ((Float) animation.getAnimatedValue()));
                     } else if (i > newIndex) {
                         getChildAt(i).setTranslationY(
-                                (getHeight() + height * (i - (newIndex + 1))) -
-                                        ((getHeight() - (node.getIndex() + 1 + (parent.getDepth() > 0 ? 1 : 0)) * height) * ((Float) animation.getAnimatedValue())));
+                                (getHeight() + headerHeight * (i - (newIndex + 1))) -
+                                        ((getHeight() - (node.getIndex() + 1 + (parent.getDepth() > 0 ? 1 : 0)) * headerHeight) * ((Float) animation.getAnimatedValue())));
                     } else {
-                        getChildAt(newIndex).setTranslationY(height * newIndex * ((Float) animation.getAnimatedValue()));
+                        getChildAt(newIndex).setTranslationY(headerHeight * newIndex * ((Float) animation.getAnimatedValue()));
                     }
                 }
             }
@@ -307,20 +310,23 @@ public abstract class NodeFlowLayout extends RelativeLayout {
      * @param fadeIn if true - runs a fade in animation
      */
     private void updateViews(Node<?> node, boolean fadeIn) {
-        Node<?> aNode = !fadeIn && !node.equals(root) ? node.getParent() : node;
+        Node<?> aNode = !fadeIn && node.getDepth() > 0 && getChildCount() > 0 ? node.getParent() : node;
         int depthAdjustment = (node.getDepth() > 1 ? 1 : 0);
         if (fadeIn) {
-            int activeNodeIndex = aNode.getIndex() + depthAdjustment;
-            if (activeNodeIndex < getChildCount())
-                removeViews(activeNodeIndex + 1, getChildCount() - 1 - activeNodeIndex);
-            removeViews(0, activeNodeIndex);
+            if (getChildCount() > 0) {
+                int activeNodeIndex = aNode.getIndex() + depthAdjustment;
+                if (activeNodeIndex < getChildCount())
+                    removeViews(activeNodeIndex + 1, getChildCount() - 1 - activeNodeIndex);
+                removeViews(0, activeNodeIndex);
+            } else if (aNode.getDepth() > 0)
+                addView(_getHeaderView(aNode));
             if (aNode.hasChildren())
                 addChildren(aNode, false);
             else {
                 addView(_getContentView(aNode));
             }
-        } else if (!node.equals(root)) {
-            removeViews(aNode.getChildCount() + depthAdjustment, getChildCount() - aNode.getChildCount() - depthAdjustment);//anode == node.getParent()
+        } else if (node.getDepth() > 0) {
+            removeViews(aNode.getChildCount() + depthAdjustment, getChildCount() - aNode.getChildCount() - depthAdjustment);
         } else {
             if (aNode.hasChildren())
                 addChildren(node, true);
@@ -342,12 +348,12 @@ public abstract class NodeFlowLayout extends RelativeLayout {
      * @param show if true - children are visible
      */
     private void addChildren(Node<?> node, boolean show) {
-        int omitIndex = (!show || node.equals(root)) ? -1 : 0;
+        int omitIndex = (!show || node.getDepth() == 0) ? -1 : 0;
         int i = getChildCount();
         for (int j = 0; j < node.getChildCount(); ++j) {
             if (omitIndex != j) {
                 View v = _getHeaderView(node.getChildAt(j));
-                v.setTranslationY(i++ * height);
+                v.setTranslationY(i++ * headerHeight);
                 v.setAlpha(show ? 1 : 0);
                 addView(v);
             }
@@ -363,12 +369,12 @@ public abstract class NodeFlowLayout extends RelativeLayout {
     private View _getHeaderView(final Node<?> node) {
         View view = getHeaderView(node);
         if (view.getLayoutParams() != null && view.getLayoutParams().height >= 0)
-            height = view.getLayoutParams().height
+            headerHeight = view.getLayoutParams().height
                     + ((MarginLayoutParams) view.getLayoutParams()).topMargin
                     + ((MarginLayoutParams) view.getLayoutParams()).bottomMargin;
         else {
             view.measure(0, 0);
-            height = view.getMeasuredHeight();
+            headerHeight = view.getMeasuredHeight();
         }
         view.setOnClickListener(new OnClickListener() {
             @Override
@@ -390,15 +396,31 @@ public abstract class NodeFlowLayout extends RelativeLayout {
      */
     private View _getContentView(Node<?> node) {
         View v = getContentView(node);
-        int margin = ((MarginLayoutParams) getChildAt(0).getLayoutParams()).bottomMargin; //hide header margin
-        v.setTranslationY(height - margin);
+        int margin = getChildCount() > 0 ? ((MarginLayoutParams) getChildAt(0).getLayoutParams()).bottomMargin : 0; //hide header margin
+        v.setTranslationY(headerHeight - margin);
         if (v.getLayoutParams() == null) {
-            v.setLayoutParams(new MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (getHeight() - height + margin)));
+            v.setLayoutParams(new MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (getHeight() - headerHeight + margin)));
         } else {
             v.getLayoutParams().width = MarginLayoutParams.MATCH_PARENT;
-            v.getLayoutParams().height = (int) (getHeight() - height + margin);
+            v.getLayoutParams().height = (int) (getHeight() - headerHeight + margin);
         }
         return v;
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+        getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                } else {
+                    getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                }
+                updateViews(activeNode, true);
+            }
+        });
+        super.onRestoreInstanceState(state);
     }
 
     /**
