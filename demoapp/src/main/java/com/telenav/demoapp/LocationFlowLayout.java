@@ -1,4 +1,4 @@
-package telenav.com.demoapp;
+package com.telenav.demoapp;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -16,9 +16,9 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.Arrays;
 
-import telenav.com.nodeflow.Node;
-import telenav.com.nodeflow.NodeFlowLayout;
-import telenav.com.nodeflow.OnActiveNodeChangeListener;
+import com.telenav.nodeflow.Node;
+import com.telenav.nodeflow.NodeFlowLayout;
+import com.telenav.nodeflow.OnActiveNodeChangeListener;
 
 public class LocationFlowLayout extends NodeFlowLayout {
     public LocationFlowLayout(Context context) {

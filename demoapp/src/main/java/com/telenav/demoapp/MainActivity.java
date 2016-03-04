@@ -1,4 +1,4 @@
-package telenav.com.demoapp;
+package com.telenav.demoapp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

@@ -4,10 +4,10 @@
     android:id="@+id/nodeContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="telenav.com.demoapp.MainActivity"
+    tools:context="com.telenav.demoapp.MainActivity"
     android:background="#F1F0FF">
 
-    <telenav.com.demoapp.LocationFlowLayout
+    <com.telenav.demoapp.LocationFlowLayout
         android:id="@+id/nodeFlow"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

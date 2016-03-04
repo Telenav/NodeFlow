@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="telenav.com.nodeflow">
+    package="com.telenav.nodeflow">
 
     <application>
 

@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "telenav.com.nodeflow"
+        applicationId "com.telenav.nodeflow"
         minSdkVersion 17
         targetSdkVersion 23
         versionCode 1
