@@ -69,3 +69,9 @@ Set node change listener & animation duration
  nodeFlow.setNodeChangeListener(new OnActiveNodeChangeListener() {...});
  nodeFlow.setAnimationDuration(500);
 ```
+
+#Sample
+For a more detailed example check the [demoapp](https://github.com/Telenav/NodeFlow/tree/master/demoapp) module.
+
+#License
+[Apache License, Version 2.0](https://github.com/Telenav/NodeFlow/blob/master/LICENSE.md)
