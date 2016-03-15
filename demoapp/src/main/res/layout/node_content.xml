@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/content_image"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/image_height"
+        android:layout_alignParentEnd="true"
+        app:actualImageScaleType="focusCrop"
+        tools:background="@android:color/darker_gray" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/content_image"
+        android:background="@color/header_background_with_alpha"
+        android:gravity="center_vertical"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp">
+
+        <TextView
+            android:id="@+id/content_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/header_text"
+            android:textSize="30sp"
+            tools:text="Ohio" />
+
+        <TextView
+            android:id="@+id/content_subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/content_title"
+            android:textColor="@color/header_text"
+            android:textSize="15sp"
+            tools:text="Population: 25.345.453" />
+
+        <TextView
+            android:id="@+id/content_subtitle2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/content_subtitle"
+            android:textColor="@color/header_text"
+            android:textSize="15sp"
+            tools:text="Area: 25.345.453" />
+
+        <TextView
+            android:id="@+id/content_subtitle3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/content_title"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@id/content_subtitle"
+            android:textColor="@color/header_text"
+            android:textSize="15sp"
+            tools:text="Weather: 25 degrees" />
+
+        <TextView
+            android:id="@+id/content_subtitle4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/content_subtitle3"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@id/content_subtitle"
+            android:textColor="@color/header_text"
+            android:textSize="15sp"
+            tools:text="Weather: 25 degrees" />
+    </RelativeLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/content_image"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:id="@+id/content_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-smallcaps"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="5dp"
+            android:padding="16dp"
+            android:textColor="@color/details_text"
+            android:textSize="@dimen/details_text_size"
+            tools:text="California is a state located on the West Coast of the United States. It is the most populous U.S. state, with 39 million people, and the third largest state by area (after Alaska and Texas). California is bordered by Oregon to the north, Nevada to the east, Arizona to the southeast, and the Mexican state of Baja California to the south. It contains the nation's second most populous census statistical area (Greater Los Angeles Area) and the fifth most populous (San Francisco Bay Area), and eight of the nation's 50 most populated cities (Los Angeles, San Diego, San Jose, San Francisco, Fresno, Sacramento, Long Beach, and Oakland). Sacramento has been the state capital since 1854." />
+    </ScrollView>
+</RelativeLayout>

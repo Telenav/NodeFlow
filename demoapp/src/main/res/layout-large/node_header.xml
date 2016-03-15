@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="@dimen/header_height"
     android:layout_marginBottom="1px"
     android:background="@android:color/darker_gray">
 
@@ -15,7 +15,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:src="@drawable/public_back_drawable"
-        android:tint="#F1F0FF" />
+        android:tint="@color/header_text" />
 
     <TextView
         android:id="@+id/list_item_text"
@@ -26,8 +26,8 @@
         android:layout_toEndOf="@id/list_item_image"
         android:fontFamily="sans-serif"
         android:singleLine="true"
-        android:textColor="#F1F0FF"
-        android:textSize="25sp"
+        android:textColor="@color/header_text"
+        android:textSize="@dimen/header_text_size"
         tools:text="Category" />
 
     <ImageView
@@ -39,7 +39,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:src="@drawable/ic_star_border_white_36dp"
-        android:tint="#F1F0FF"
+        android:tint="@color/header_text"
         android:alpha="0"
         tools:alpha="1"/>
 </RelativeLayout>

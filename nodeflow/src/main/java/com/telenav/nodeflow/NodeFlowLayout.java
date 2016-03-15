@@ -396,6 +396,11 @@ public abstract class NodeFlowLayout extends RelativeLayout {
      */
     private View _getContentView(Node<?> node) {
         View v = getContentView(node);
+        setContentLayoutParams(v);
+        return v;
+    }
+
+    private void setContentLayoutParams(View v) {
         int margin = getChildCount() > 0 ? ((MarginLayoutParams) getChildAt(0).getLayoutParams()).bottomMargin : 0; //hide header margin
         v.setTranslationY(headerHeight - margin);
         if (v.getLayoutParams() == null) {
@@ -404,7 +409,13 @@ public abstract class NodeFlowLayout extends RelativeLayout {
             v.getLayoutParams().width = MarginLayoutParams.MATCH_PARENT;
             v.getLayoutParams().height = (int) (getHeight() - headerHeight + margin);
         }
-        return v;
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        if (oldh != 0 && oldh < h && !activeNode.hasChildren()) {
+            setContentLayoutParams(getChildAt(getChildCount() - 1));
+        }
     }
 
     @Override

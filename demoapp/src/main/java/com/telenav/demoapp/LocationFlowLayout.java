@@ -104,7 +104,7 @@ public class LocationFlowLayout extends NodeFlowLayout {
     @Override
     protected View getContentView(Node<?> node) {
         Location data = (Location) node.getData();
-        ViewGroup v = (ViewGroup) LayoutInflater.from(getContext()).inflate(R.layout.content, this, false);
+        ViewGroup v = (ViewGroup) LayoutInflater.from(getContext()).inflate(R.layout.node_content, this, false);
         ((TextView) v.findViewById(R.id.content_title)).setText(data.getName());
         ((TextView) v.findViewById(R.id.content_subtitle)).setText("Population " + data.getPopulation());
         ((TextView) v.findViewById(R.id.content_subtitle2)).setText("Density " + data.getDensity());
@@ -121,7 +121,7 @@ public class LocationFlowLayout extends NodeFlowLayout {
     @Override
     protected View getHeaderView(final Node<?> node) {
         Location data = (Location) node.getData();
-        ViewGroup view = (ViewGroup) LayoutInflater.from(getContext()).inflate(R.layout.oneline_header, this, false);
+        ViewGroup view = (ViewGroup) LayoutInflater.from(getContext()).inflate(R.layout.node_header, this, false);
         ((TextView) view.findViewById(R.id.list_item_text)).setText(data.getName());
         ((ImageView) view.findViewById(R.id.list_item_image)).setImageResource(data.getIconResourceId());
         switch (node.getDepth()) {
