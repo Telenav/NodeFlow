@@ -1,4 +1,5 @@
  [ ![Download](https://api.bintray.com/packages/dimatim/maven/NodeFlow/images/download.svg) ](https://bintray.com/dimatim/maven/NodeFlow/_latestVersion)
+ [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-NodeFlow-blue.svg?style=flat)](http://android-arsenal.com/details/1/3279)
 # NodeFlow
 NodeFlow is an Android library that provides a simple way to visualize hierarchical content. Perfect for displaying items that are organized in categories / subcategories.
 
@@ -12,7 +13,7 @@ Android 4.0+ (Ice Cream Sandwich and later)
 ###Step 1
 Add the following line to the ```dependencies``` section of your ```build.gradle``` file
 ```gradle
-compile 'com.telenav.nodeflow:nodeflow:0.1.1'
+compile 'com.telenav.nodeflow:nodeflow:0.1.2'
 ```
 ###Step 2
 Extend NodeFlowLayout class and implement abstract methods
